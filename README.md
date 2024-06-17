@@ -9,25 +9,28 @@ This article will outline how to implement a story telling AI application struct
 [https://github.com/comfyanonymous/ComfyUI](https://github.com/comfyanonymous/ComfyUI)
 
 2. Download dark sushi model
+
+```
 wget https://civitai.com/api/download/models/56071
+```
+
+Download model and put under ComfyUI\models\checkpoints.
+Make sure the name on the JSON file corresponds to the model name: darkSushiMixMix_colorful.safetensors
 
 3. If running on Jetson devices either upgrade to Jetpack 6 to get access to newer python version or create a custom container
 
 For Jetpack 5 create a custom container:
 
-
 ```python
 PYTHON_VERSION=3.11 PYTORCH_VERSION=2.3 jetson-containers build --name=aiapps pytorch:2.2 torchvision:0.17.2 torchaudio:2.2.2 python:3.11 langchain
 ```
-
-
-Now map , the Comfui folder to the Docker home directory.
+Map , the Comfui folder to the Docker home directory.
 
 ```shell
 jetson-containers run -p 80:8188 -v /agxorin_ssd/ComfyUI:/home $(autotag aiapps)
 ```
 
-We have to install additional packages before we start the ComfyUI server.
+We have to install additional packages before we start the ComfyUI server on Jetson.
 
 ```python
 cd home
@@ -43,7 +46,11 @@ Ollama is available for Windows, Linux and Jetson via Jetson Containers.
 
 On Windows, I used WSL:
 1. Install Ollama on WSL
-2. ollama run mistral
+2. Run ollama
+   
+```
+ollama run mistral
+```
 
 On Jetson:
 
@@ -75,8 +82,7 @@ conda deactivate
 2. Install the requirements
 3. Upgrade requests separately
 4. Install piper-tts for text to speech.
-5. Start application
-6. Navigate to http://127.0.0.1:8000 and ask the chatbot to provide a kids story.
+5. Start application, navigate to http://127.0.0.1:8000 and ask the chatbot to provide a story.
 
 # Notes:
 
